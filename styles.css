@@ -1,0 +1,82 @@
+body{
+	padding:0;
+	margin:0;
+}
+a:link{
+	text-decoration:none;
+}
+.center{
+	text-align:center;
+}
+.right{
+	text-align:right;
+}
+.hide{
+	display:none;
+}
+.title{
+	margin:20px 0 0 0;
+	font-family: 'Fredoka One', 'Open Sans', sans-serif;
+	font-size:1.5em;
+}
+
+.text{
+	font-family: 'Open Sans', sans-serif;
+	font-size:1.2em;
+}
+
+.form-div{
+	margin:20px auto 0 auto;
+	max-width:300px;
+	background-color:#e6ffff;
+	padding:10px;
+}
+
+#form{
+	text-align:left;
+}
+
+input[type=text], input[type=password]{
+width:100%;
+padding:5px;
+margin:10px 0px;
+font-family: 'Open Sans', sans-serif;
+font-size:1.2em;
+border:thin solid #000;
+-moz-border:thin solid #000;
+-webkit-border:thin solid #000;
+box-sizing:border-box;
+-moz-box-sizing:border-box;
+-webkit-box-sizing:border-box;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button,input[type=number]
+{
+min-width:100%;
+padding:5px;
+margin:10px 0px;
+font-family: 'Open Sans', sans-serif;
+font-size:1.2em;
+border:thin solid #000;
+-moz-border:thin solid #000;
+-webkit-border:thin solid #000;
+box-sizing:border-box;
+-moz-box-sizing:border-box;
+-webkit-box-sizing:border-box;
+
+}
+
+
+.submit{
+	padding:5px;
+	background-color:#e6e6ff;
+	font-family: 'Open Sans', sans-serif;
+	font-size:1.2em;
+	border:none;
+	cursor:pointer;
+}
+
+img{
+	max-width:400px;
+}
