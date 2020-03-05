@@ -1,5 +1,111 @@
 (function(){
+
+	var sessToken = localStorage.getItem("sessionToken");
+	var firstName; 
+	var lastName;
+	var birthdayMonth;
+	var birthdayDay;
+	var birthdayYear;
+	var birthday;
+	var email;
+	var phoneNumber;
+	var username;
+	var password;
+	var repPassword;
 	
+	function getProfilePic(){
+		var imageFound = false;
+		$.post("scripts.php",{"sessionToken":sessToken,"task":"get profile pic"},function(data){
+				if(data.hasPic == "false") return;
+				imageFound = true;
+				document.getElementById("profile-image-border").style= "background-image:url('"+data.pic+"')"
+			},"json");
+			return imageFound;
+	}//function getProfilePic()
+	
+	var pageTask = document.getElementById("page").getAttribute("task");
+	
+	if(pageTask == "register"){
+	
+	var formDivs = document.getElementsByClassName("form-div");
+	
+	document.getElementById("back1").onclick = function(){
+		formDivs[0].classList.remove("hide");
+		formDivs[1].classList.add("hide");
+	}//back1
+	
+	document.getElementById("back2").onclick = function(){
+		formDivs[1].classList.remove("hide");
+		formDivs[2].classList.add("hide");
+	}//back1
+	
+	document.getElementById("back3").onclick = function(){
+		formDivs[2].classList.remove("hide");
+		formDivs[3].classList.add("hide");
+	}//back1
+	
+	document.getElementById("next1").onclick = function(){
+		firstName = document.getElementById("first-name").value;
+		lastName = document.getElementById("last-name").value;
+		birthdayMonth = document.getElementById("birthday-month").value;
+		birthdayDay = document.getElementById("birthday-day").value;
+		birthdayYear = document.getElementById("birthday-year").value;
+		if(!firstName || !lastName || !birthdayMonth || !birthdayDay || !birthdayYear) return;
+		birthday = birthdayYear+"-"+birthdayMonth+"-"+birthdayDay;//format birthday
+		formDivs[0].classList.add("hide");
+		formDivs[1].classList.remove("hide");
+	}//function
+	
+	//make it so when typing birthday the cursor jumps to next input
+	document.getElementById("birthday-day").addEventListener("keyup", function(){
+		var number = this.value.toString();
+		if(number.length == 2){
+			document.getElementById("birthday-month").focus();
+			document.getElementById("birthday-month").select();
+		}//if
+	});
+	document.getElementById("birthday-month").addEventListener("keyup", function(){
+		var number = this.value.toString();
+		if(number.length == 2){
+			document.getElementById("birthday-year").focus();
+			document.getElementById("birthday-year").select();
+		}//if
+	});
+	//make sure the year isn't more than 4 digits
+	document.getElementById("birthday-year").addEventListener("keydown",function(e){
+		var value = this.value;
+		var valueString = value.toString();
+		if(valueString.length >= 4 && e.keyCode!=8){
+			e.preventDefault();
+		}//if
+	});
+
+	document.getElementById("next2").onclick = function(){
+		if(!gender) return;
+		formDivs[1].classList.add("hide");
+		formDivs[2].classList.remove("hide");
+		
+	}//function
+		document.getElementById("male-img").onclick = function(){
+			this.classList.add("border1");
+			gender="male";
+			document.getElementById("female-img").classList.remove("border1");
+		}
+		document.getElementById("female-img").onclick = function(){
+			this.classList.add("border1");
+			gender="female";
+			document.getElementById("male-img").classList.remove("border1");
+		}
+	document.getElementById("next3").onclick = function(){
+		email = document.getElementById("email").value;
+		phoneNumber = document.getElementById("phone-number").value;
+		if(!email || !phoneNumber) return;
+		formDivs[2].classList.add("hide");
+		formDivs[3].classList.remove("hide");
+	}//function
+	}//if(pageTaks == "register")
+	
+	if(pageTask == "register" || pageTask == "login"){
 	var form = document.getElementById("form");
 	localStorage.removeItem('username',username);
 	
@@ -9,22 +115,24 @@
 	
 	//registration
 	if(task == "register"){
-	var firstName = document.getElementById("first-name").value;
-	var lastName = document.getElementById("last-name").value;
-	var username = document.getElementById("username").value;
-	var email = document.getElementById("email").value;
-	var phoneNumber = document.getElementById("phone-number").value;
-	var password = document.getElementById("password").value;
-	var repPassword = document.getElementById("rep-password").value;
 	
-	if(!firstName ||!lastName || !username || !email || !phoneNumber || !password || !repPassword) return;
+	username = document.getElementById("username").value;
+	password = document.getElementById("password").value;
+	repPassword = document.getElementById("rep-password").value;
+	
+	if(!firstName ||!lastName || !username || !email || !phoneNumber || !password || !repPassword || !gender || !birthday) return;
 	if(password.length < 6){
 		alert("Password must be at least 6 characters");
 		return;
 	};
-	if(password != repPassword) alert("Passwords don't match");
+	if(password != repPassword){ 
+		alert("Passwords don't match");
+		return;
+	}
 	
-	var postData = {"firstName":firstName, "lastName":lastName, "username":username, "phoneNumber":phoneNumber, "email":email, "password":password, "task":task};
+	var postData = {"firstName":firstName, "lastName":lastName, 
+	"username":username, "phoneNumber":phoneNumber, "email":email, 
+	"password":password, "task":task, "gender":gender, "birthday":birthday};
 	
 	$.post("scripts.php", postData, function(data){
 	
@@ -36,12 +144,15 @@
 			alert("That email is taken");
 			return;
 		}//if
-		window.location.replace("login.html");
+		window.location.replace("index.html");
+		localStorage.setItem("sessionToken",data);
 	});//post
 	}//task == "register"
 	
 	//login
+	if(pageTask == "login") localStorage.removeItem("sessionToken");
 	if(task == "login"){
+		
 		var username = document.getElementById("username").value;
 		var password = document.getElementById("password").value;
 		var code = document.getElementById("code").value;
@@ -62,18 +173,72 @@
 				setTimeout(function(){
    					alert("Please enter code that was texted");
 				}, 5);
+				return;
 			}//if
 			if(data == "wrong code"){
 				alert("Incorrect code");
-			}//if
-			if(data == "success"){
-				localStorage.setItem('username',username);
-				window.location.replace("index.html");
+				return;
 			}//if
 			
+				localStorage.setItem('username',username);
+				window.location.replace("index.html");
+				localStorage.setItem("sessionToken",data);
 		})//post
 	}//task == "login"
 	
-	}
+	}//on form submit
+	}//if(pageTask == "register" || pageTask == "login")
+	
+	//User is on profile page
+	if(document.getElementById("profile-pic-form")){
+		
+		getProfilePic();
+		
+		document.getElementById("profile-pic-hidden").value = sessToken;
+		//When changing profile image, submit form once image is selected
+		document.getElementById("profile-pic-input").onchange = function(){
+			document.getElementById("profile-pic-form").submit();
+			document.getElementById("profile-image-border").innerHTML = "<img class='loading-image' src='images/gears.gif'>"
+			getProfilePic();
+			var getPicInterval = setInterval(function(){
+				if(!getProfilePic()){
+					clearInterval(getPicInterval);
+					document.getElementById("profile-image-border").innerHTML = "";
+				}
+			},500);
+			
+		}
+		
+		//submit user info
+		document.getElementById("user-info-form").onsubmit = function(e){
+			e.preventDefault();
+			var formValues = $("#user-info-form").serialize();
+			$.post("scripts.php",{"sessToken":sessToken,"formValues":formValues},function(data){
+				document.getElementById("submit-feedback").innerHTML = "";
+				alert("Update!");
+			});
+		}//onsubmit
+		
+		//get user info
+		$.post("scripts.php",{"sessToken":sessToken,"task":"loadinfo"},function(data){
+			
+			for(var i=0; i < data.returnArray.length; i++){
+				var formElements = document.getElementsByName(data.returnArray[i][0]);
+				for(var y=0; y < formElements.length; y++){
+					if(formElements[y].type=="checkbox" || formElements[y].type=="radio"){
+						if(formElements[y].value == data.returnArray[i][1]){
+							formElements[y].checked = true;
+						}//if
+					}//if
+					else{
+						formElements[y].value = data.returnArray[i][1]
+					}//else
+					
+				}//for
+			}//for
+			
+		},"json");
+		
+	}//if document.getElementById("profile-pic-form"
 	
 })();

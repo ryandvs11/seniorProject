@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 <link href="styles.css" rel="stylesheet" type="text/css" />
@@ -6,11 +7,13 @@
 </head>
 <body>
 
+<div class="hide" id="page" task="register"></div>
+
 <div class="title center">Let's Register</div>
 
-<div class="form-div center text">
-
 <form id="form" task="register">
+
+<div class="form-div text">
 
 <div>
 First name<br>
@@ -23,9 +26,45 @@ Last name<br>
 </div>
 
 <div>
-Username<br>
-<input type="text" id="username">
+Birthday<br>
+<input placeholder="DD" type="number" class="birthday-num" id="birthday-day">
+<input placeholder="MM" type="number" class="birthday-num" id="birthday-month">
+<input placeholder="YYYY" type="number" class="birthday-num" id="birthday-year" autocomplete="nope" />
 </div>
+
+<div class="center">
+<p>
+<input type="button" value="next" class="button1" id="next1">
+<div>
+	<a href="login.html">Have an account?</a>
+</div>
+</div>
+
+</div><!-- form-div -->
+
+<div class="form-div text center hide">
+
+<div class="inline">
+Male<br>
+<img class="gender-images hover" src="images/male-symbol.png" id="male-img">
+</div>
+<div class="inline">
+Female<br>
+<img class="gender-images hover" src="images/female-symbol.png" id="female-img">
+</div>
+
+<div class="center" style="position:relative">
+<p>
+<span id="back1" class="hover" style="position:absolute;left:0px">&#8592;</span>
+<input type="button" value="next" class="button1" id="next2">
+<div>
+	<a href="login.html">Have an account?</a>
+</div>
+</div>
+
+</div><!-- form-div -->
+
+<div class="form-div text hide">
 
 <div>
 Email<br>
@@ -35,6 +74,24 @@ Email<br>
 <div>
 Phone number<br>
 <input type="number" id="phone-number">
+</div>
+
+<div class="center" style="position:relative">
+<p>
+<span id="back2" class="hover" style="position:absolute;left:0px">&#8592;</span>
+<input type="button" value="next" class="button1" id="next3">
+<div>
+	<a href="login.html">Have an account?</a>
+</div>
+</div>
+
+</div><!-- form-div -->
+
+<div class="form-div text hide">
+
+<div>
+Username<br>
+<input type="text" id="username">
 </div>
 
 <div>
@@ -47,13 +104,18 @@ Repeat Password <br>
 <input type="password" id="rep-password">
 </div>
 
-<div class="center"><p>
-<input type="submit" value="Register" class="submit">
+<div class="center" style="position:relative">
+<p>
+<span id="back3" class="hover" style="position:absolute;left:0px">&#8592;</span>
+<input type="submit" value="Register" class="button1">
+<div>
+	<a href="login.html">Have an account?</a>
+</div>
 </div>
 
-</form>
+</div><!-- form-div -->
 
-</div><!-- id="form-div" -->
+</form><!-- id="form" -->
 
 <script src="jquery.js"></script>
 <script src="scripts.js"></script>
