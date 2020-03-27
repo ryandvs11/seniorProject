@@ -41,7 +41,7 @@ a:link{
 .form-div{
 	margin:20px auto 0 auto;
 	max-width:300px;
-	background-color:#e6ffff;
+	background-color:#62baf5;
 	padding:10px;
 }
 
@@ -144,7 +144,7 @@ img{
 #profile-image-border{
 	display:block;
 	border-radius: 50%;
-	border: medium solid lightblue;
+	border: medium solid #62baf5;
 	width:150px;
 	height:150px;
 	background-size:cover;
