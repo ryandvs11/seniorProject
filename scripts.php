@@ -102,7 +102,8 @@ elseif($task == "get profile pic"){
 
 elseif(isset($_POST["formValues"])){
 	$sessionToken = $_POST["sessToken"];
-	$formValues = $_POST["formValues"];
+	$formValues = str_replace("+"," ",$_POST["formValues"]);//remove + that serialize adds
+	$formValues = $mysqli->real_escape_string($formValues);
 	$query = $mysqli->query("SELECT * FROM users WHERE code1='$sessionToken'");
 	$get = $query->fetch_assoc();
 	$username = $get["username"];

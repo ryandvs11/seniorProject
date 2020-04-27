@@ -23,6 +23,10 @@
 			return imageFound;
 	}//function getProfilePic()
 	
+	function loadAboutMe(){
+		document.getElementById("about-me-div").innerHTML = document.getElementById("about-me-textarea").value;
+	}
+	
 	var pageTask = document.getElementById("page").getAttribute("task");
 	
 	if(pageTask == "register"){
@@ -209,6 +213,12 @@
 			
 		}
 		
+		//handle edit about-me toggle
+		document.getElementById("edit-toggle").onclick = function(){
+			document.getElementById("about-me-textarea").classList.remove("hide");
+			document.getElementById("about-me-div").classList.add("hide");
+		}
+		
 		//submit user info
 		document.getElementById("user-info-form").onsubmit = function(e){
 			e.preventDefault();
@@ -217,6 +227,12 @@
 				document.getElementById("submit-feedback").innerHTML = "";
 				alert("Update!");
 			});
+			
+			//handle edit about-me toggle after submit
+			loadAboutMe()
+			document.getElementById("about-me-textarea").classList.add("hide");
+			document.getElementById("about-me-div").classList.remove("hide");
+			
 		}//onsubmit
 		
 		//get user info
@@ -233,10 +249,10 @@
 					else{
 						formElements[y].value = data.returnArray[i][1]
 					}//else
-					
 				}//for
 			}//for
 			
+			loadAboutMe()
 		},"json");
 		
 	}//if document.getElementById("profile-pic-form"
