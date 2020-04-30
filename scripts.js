@@ -257,4 +257,21 @@
 		
 	}//if document.getElementById("profile-pic-form"
 	
+	
+	//Page that loads users when searching for partners
+	if(pageTask == "user-search"){
+	
+		$.post("scripts.php",{"sessToken":sessToken,"task":"loadusers"},function(data){
+			
+			document.getElementById("user-list-div").innerHTML = data.list;
+			
+		},"json");
+	
+	}//user-list-div
+	
+	//Chat.html
+	if(pageTask == "chat"){
+		alert()
+	}//if
+	
 })();

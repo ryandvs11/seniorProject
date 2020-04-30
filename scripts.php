@@ -136,4 +136,54 @@ elseif($task == "loadinfo"){
 	echo json_encode($return);
 }//elseif
 
+elseif($task == "loadusers"){
+	
+	$sessionToken = $_POST["sessToken"];
+	$query = $mysqli->query("SELECT * FROM users");
+	
+	$return["list"] = "";
+	
+	while($get = $query->fetch_array()){
+		
+		$username = $get["username"];
+		$fName = $get["first_name"];
+		$lName = $get["last_name"];
+		
+		$query2 = $mysqli->query("SELECT * FROM users_info WHERE username='".$username."'");
+		$get2 = $query2->fetch_assoc();
+		$profile_pic = $get2["profile_pic"];
+		$userInfo = $get2["info"];
+		
+		//get 'about me' from user info
+		if($userInfo){
+			$aboutMe = explode("=",$userInfo);
+			if($aboutMe[0] == "about-me"){
+				$aboutMe = $aboutMe[1];
+				$aboutMe = explode("&",$aboutMe);
+				$aboutMe = $aboutMe[0];
+			}//if
+			else $aboutMe = "";
+		}//if
+		else $aboutMe = "";
+		
+		if(!$profile_pic) $profile_pic = "profile-placeholder.png";
+		else $profile_pic = "uploads/".$profile_pic;
+		
+		$return["list"] .= "
+		<div class='user-div text-small' style='text-align:left'>
+		
+		<div class='profile-pic-list inline-top' style='background-image:url(\"images/".$profile_pic."\")'></div>
+		
+		<div class='inline-top' style='position:relative;width:100%;max-width:290px;height:100%;'>
+		".$fName." ".$lName."
+		<p>
+		".$aboutMe."
+		<div style='text-align:right;position:absolute;bottom:5px;right:0px'>Chat</div>
+		</div> 
+		</div>";
+	}//while
+	
+	echo json_encode($return);
+}
+
 ?>

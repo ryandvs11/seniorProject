@@ -120,6 +120,11 @@ img{
 
 .inline-top{
 	display:inline-block;
+	vertical-align:tope;
+}
+
+.inline-top{
+	display:inline-block;
 	vertical-align:top;
 }
 
@@ -298,4 +303,24 @@ box-sizing:border-box;
 
 .margin-top1{
 	margin-top:10px;
+}
+
+#user-list-div{
+	border:thin solid #000;
+	border-bottom: none;
+	max-width:400px;
+	width:100%;
+	margin:0 auto;
+}
+
+.user-div{
+	height:100px;
+	border-bottom:thin solid #000;
+}
+
+.profile-pic-list{
+	width:100px;
+	height:99px;
+	background-size:100px 100px;
+	border-right:thin solid #000;
 }
