@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="styles.css" rel="stylesheet" type="text/css" />
+<link href="fonts/open-sans.css" rel="stylesheet" type="text/css" />
+<link href="fonts/fredokaone.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div id="page-div" class="center">
+		<div class='text-small right' style="margin-right:5px;">
+			<a href="login.html">Logout </a>
+		</div>
+		<div id="page" task="profile" class="hide"></div>
+		<div class="title">Profile</div>
+		<div class="profile-image">
+			<div id="profile-image-border" style="background-image:url('images/profile-placeholder.png')">
+			</div><!-- profile-image-border -->
+			<form id="profile-pic-form" name="upload-profile-pic" action="scripts.php" method="post" enctype="multipart/form-data" target="upload-iframe">
+				<input type="button" value="Change" class="button2 hover" style="">
+				<div style="margin-top:-27px">
+				<input type="file" id="profile-pic-input" name="profile-pic" value="Change" class="button2 invisible" style="width:150px;margin-left:-90px">
+				</div>
+				<input type="hidden" id="profile-pic-hidden" name='code'>
+			</form>
+			<iframe name="upload-iframe" class="hide"></iframe>
+		</div><!-- class="profile-image center" -->
+		<div id="user-info" class="text center text-small left" style="">
+			<form id="user-info-form">
+				<div class="text">Your info</div>
+				<div class="form-div">About me 
+					<div id="edit-toggle" style="float:right" class="hover">Edit</div>
+				</div>
+				<div class="margin-top1">
+					<textarea id="about-me-textarea" name="about-me" class="textarea1 hide"></textarea>
+					<div id="about-me-div">A little about me...</div>
+				</div>
+				<div class="form-div text-small">Current fitness level</div>
+				<div class="margin-top1">
+					<div class="inline text-small" style="margin-right:170px;">Not fit</div>
+					<div class="inline text-small">Very fit</div>
+					<br>
+					<input id="fitness-level" name="fitness-level" type="range" min="1" max="100" value="50">
+				</div>
+				<div class="form-div margin-bottom1">Preferred fitness partner</div>
+					<input type="radio" name="partner-gender" value="male"> Male
+					<input type="radio" name="partner-gender" value="female"> Female 
+					<input type="radio" name="partner-gender" value="no-preference" checked> No preference
+					<div class="form-div margin-bottom1">Should partner be more fit</div>
+					<input type="radio" name="partner-level" value="yes"> Yes
+					<input type="radio" name="partner-level" value="no"> No
+					<input type="radio" name="partner-level" value="no-preference" checked> No preference 
+					<div class="form-div text-small">Zip code</div>
+					<input type="number" name="zip" id="zip-code" placeholder="XXXXX">
+					<div class="form-div text-small">Goal weight</div>
+					<input type="number" name="goal-weight" id="goal-weight">
+					<div class="inline" style="margin:0 20px;">
+						<input type="radio" name="weight-units" value="lb" checked>lb 
+					</div>
+					<div class="inline">
+						<input type="radio" name="weight-units" value="kg">kg
+					</div>
+					<div class="left form-div text-small" style="margin-bottom:5px">Goals</div>
+					<input type="checkbox" name="goal1" class="goals" value="increase-muscle-mass">Increase muscle mass<p>
+					<input type="checkbox" name="goal2" class="goals" value="increase-strength"> Increase strength<p>
+					<input type="checkbox" name="goal3" class="goals" value="lose-weight"> Lose weight<p>
+					<input type="checkbox" name="goal4" class="goals" value="cardiovascular-endurance"> Cardiovascular endurance<p>
+					<input type="checkbox" name="goal5" class="goals" value="muscular-endurance"> Muscular endurance
+					<p>
+					<div class="left">
+					<input type="submit" class="button1 inline-top" value="Update"/> 
+					<div id="submit-feedback" class="inline-top"></div>
+				</div>
+			</form><!-- user-info-form -->
+		</div><!-- user-info -->
+	</div><!-- page-div -->
+	<script src="jquery.js"></script>
+	<script src="scripts.js"></script>
+</body>
+</html>

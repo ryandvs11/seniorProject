@@ -1,19 +1,177 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<link href="styles.css" rel="stylesheet" type="text/css" />
-<link href="fonts/open-sans.css" rel="stylesheet type="text/css" />
-<link href="fonts/fredokaone.css" rel="stylesheet" type="text/css" />
+	<title>Account Login</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" type="text/css" href="login.css">
+<!--===============================================================================================-->
 </head>
 <body>
+	<div class="hide" id="page" task="login"></div>
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
+				<div class='text-small text-right right' style="margin-right:5px;"><a href="login.html">Logout </a></div>
+				<h1>Fit-Link</h1>
+				<div id="page" task="profile" class="hide"></div>
+				<span class="login100-form-title p-b-32 text-center">
+					Profile
+				</span>
+				<div class="profile-image">
+					<div id="profile-image-border" style="background-image:url('./images/profile-placeholder.png')">
+					</div><!-- profile-image-border -->
+					<form id="profile-pic-form" name="upload-profile-pic" action="scripts.php" method="post" enctype="multipart/form-data" target="upload-iframe" class="text-center">
+						<input type="button" value="Change" class="btn hover" style="">
+						<div>
+							<input type="file" id="profile-pic-input" name="profile-pic" value="Change" class="button2 invisible">
+						</div>
+						<input type="hidden" id="profile-pic-hidden" name='code'>
+					</form>
+					<iframe name="upload-iframe" class="hide"></iframe>
+				</div>
+				<div id="user-info" class="text center text-small left" style="">
+					<form id="user-info-form">
+						<div class="text text-center">Your info</div>
+						<span class="txt1 p-b-11">
+							About Me
+							<div id="edit-toggle" style="float:right" class="hover">Edit</div>
+						</span>
+						<!-- <div class="form-div">
+							<div id="edit-toggle" style="float:right" class="hover">Edit</div>
+						</div> -->
+						<div class="margin-top1">
+							<textarea id="about-me-textarea" name="about-me" class="textarea1 hide"></textarea>
+							<div id="about-me-div">A little about me...</div>
+						</div>
+						<!-- <div class="form-div text-small" style="background-color: #e75480">Current fitness level</div> -->
+						<span class="txt1 p-b-11">
+							Current Fitness Level
+						</span>
+						<div class="margin-top1">
+							<div class="inline text-small" style="margin-right:170px; color: #e75480">Not fit</div>
+							<div class="inline text-small" style="color: #e75480">Very fit</div>
+							<br>
+							<input id="fitness-level" name="fitness-level" type="range" min="1" max="100" value="50">
+						</div>
+							<span class="txt1 p-b-11">
+								Preferred Fitness Partner
+							</span>
+							<div class="validate-input m-b-36" data-validate = "Username is required">
+								<select class="input2" name="partner-gender" style="display: inline-block;">
+									<option value="male">Male</option>
+									<option value="female">Female</option>
+									<option value="no-preference">No Preference</option>
+								</select>
+								<span class="focus-input100"></span>
+							</div>
+							<span class="txt1 p-b-11">
+								Should Partner be more fit
+							</span>
+							<div class="validate-input m-b-36" data-validate = "Username is required">
+								<select class="input2" name="partner-level" style="display: inline-block;">
+									<option value="yes">Yes</option>
+									<option value="no">No</option>
+									<option value="no-preference">No Preference</option>
+								</select>
+								<span class="focus-input100"></span>
+							</div>
+							<span class="txt1 p-b-11">
+								Zip Code
+							</span>
+							<div class="validate-input m-b-36" data-validate = "Zipcode is required">
+								<input class="input100" type="text" name="username" id="zip-code">
+								<span class="focus-input100"></span>
+							</div>
 
-<div class='text right' style="margin-right:5px;"><a href="login.html">Logout </a></div>
+							<span class="txt1 p-b-11">
+								Goal Weight
+							</span>
+							<div class="validate-input m-b-36" data-validate = "Username is required">
+								<input class="input100" type="text" name="username" id="goal-weight" style="width: 100%; display: inline-block;">
 
-<div class="title center">Profile</div>
+								<select class="input1" name="weight-units" style="display: inline-block;">
+									<option value="lb">lb</option>
+									<option value="kg">kg</option>
+								</select>
+								<span class="focus-input100"></span>
+							</div>
+							<span class="txt1 p-b-11">
+								Goals
+							</span>
+							<div class="validate-input m-b-36" data-validate = "Username is required">
+								<select id="dates-field2" class="multiselect-ui form-control" multiple>
+						            <option class="goals" name="goal1" value="increase-muscle-mass">Increase muscle mass</option>
+						            <option class="goals" name="goal2" value="increase-strength">Increase strength</option>
+						            <option class="goals" name="goal3" value="lose-weight">Lose weight</option>
+						            <option class="goals" name="goal4" value="cardiovascular-endurance">Cardiovascular endurance</option>
+						            <option class="goals" name="goal5" value="muscular-endurance">Muscular endurance</option>
+						        </select>
+								<span class="focus-input100"></span>
+							</div>
+							<!-- <div class="left form-div text-small" style="background-color: #e75480">Goals</div>
+							<input type="checkbox" name="goal1" class="goals" value="increase-muscle-mass">Increase muscle mass<p>
+							<input type="checkbox" name="goal2" class="goals" value="increase-strength"> Increase strength<p>
+							<input type="checkbox" name="goal3" class="goals" value="lose-weight"> Lose weight<p>
+							<input type="checkbox" name="goal4" class="goals" value="cardiovascular-endurance"> Cardiovascular endurance<p>
+							<input type="checkbox" name="goal5" class="goals" value="muscular-endurance"> Muscular endurance
+							<p> -->
+							<div class="left">
+							<input type="submit" class="button1 inline-top login100-form-btn" value="Update"/> 
+							<div id="submit-feedback" class="inline-top"></div>
+						</div>
+					</form><!-- user-info-form -->
+				</div><!-- user-info -->
+				<!-- <form id="form" task="login" class="login100-form validate-form flex-sb flex-w">
 
-<div class="profile-image center">
-<p>
-<img src="images/profile-placeholder.png"/>
-</div>
+					<span class="txt1 p-b-11">
+						Username
+					</span>
+					<div class="wrap-input100 validate-input m-b-36" data-validate = "Username is required">
+						<input class="input100" type="text" name="username" id="username" >
+						<span class="focus-input100"></span>
+					</div>
+					
+					<span class="txt1 p-b-11">
+						Password
+					</span>
+					<div class="wrap-input100 validate-input m-b-12" data-validate = "Password is required">
+						<span class="btn-show-pass">
+							<i class="fa fa-eye"></i>
+						</span>
+						<input class="input100" type="password" name="pass" id="password">
+						<span class="focus-input100"></span>
+					</div>
+					<div id="code-div" class="hide">
+						<input type="text" id="code">
+					</div>
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Login
+						</button>
+					</div>
+
+				</form>
+				<a href="register.html" class="txt1 p-b-11">
+					Create an account
+				</a> -->
+			</div>
+		</div>
+	</div>
+	
+<!--===============================================================================================-->
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!--===============================================================================================-->
+	<script src="scripts.js"></script>
 
 </body>
 </html>
