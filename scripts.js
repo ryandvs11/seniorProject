@@ -268,10 +268,39 @@
 		},"json");
 	
 	}//user-list-div
-	
+
+
 	//Chat.html
 	if(pageTask == "chat"){
-		alert()
+		
+		var url = window.location.href;
+		var chatWithUser = url.split("?");
+	    chatWithUser = chatWithUser[1];
+		
+		//load chat
+		$.post("scripts.php",{"sessToken":sessToken, "task":"loadchat", "chatWithUser":chatWithUser},function(data){
+		
+			document.getElementById("chat-container-div").innerHTML = data.messages;
+			setTimeout(function(){ window.scrollTo(0,document.body.scrollHeight) }, 100);
+			
+		},"json");
+		
+		//post chat
+		document.getElementById("message-form").onsubmit = function(e){
+		
+			e.preventDefault();
+			
+			var message = document.getElementById("message").value;
+			
+			$.post("scripts.php",{"sessToken":sessToken, "task":"postchat", 
+			"chatWithUser":chatWithUser, "message":message},function(data){
+				
+				document.getElementById("message").value = "";
+				window.location.reload();
+			},"json");
+			
+		}//function
+		
 	}//if
 	
 })();

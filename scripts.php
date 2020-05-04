@@ -139,17 +139,21 @@ elseif($task == "loadinfo"){
 elseif($task == "loadusers"){
 	
 	$sessionToken = $_POST["sessToken"];
+	$query = $mysqli->query("SELECT * FROM users WHERE code1='".$sessionToken."'");
+	$get = $query->fetch_assoc();
+	$username = $get["username"];
+	
 	$query = $mysqli->query("SELECT * FROM users");
 	
 	$return["list"] = "";
 	
 	while($get = $query->fetch_array()){
 		
-		$username = $get["username"];
+		$usernameInList = $get["username"];
 		$fName = $get["first_name"];
 		$lName = $get["last_name"];
 		
-		$query2 = $mysqli->query("SELECT * FROM users_info WHERE username='".$username."'");
+		$query2 = $mysqli->query("SELECT * FROM users_info WHERE username='".$usernameInList."'");
 		$get2 = $query2->fetch_assoc();
 		$profile_pic = $get2["profile_pic"];
 		$userInfo = $get2["info"];
@@ -169,6 +173,9 @@ elseif($task == "loadusers"){
 		if(!$profile_pic) $profile_pic = "profile-placeholder.png";
 		else $profile_pic = "uploads/".$profile_pic;
 		
+		if($username != $usernameInList) $chatLink = "<a href='chat.html?".$usernameInList."'>Chat</a>";
+		else $chatLink = "";
+		
 		$return["list"] .= "
 		<div class='user-div text-small' style='text-align:left'>
 		
@@ -178,12 +185,58 @@ elseif($task == "loadusers"){
 		".$fName." ".$lName."
 		<p>
 		".$aboutMe."
-		<div style='text-align:right;position:absolute;bottom:5px;right:0px'>Chat</div>
+		<div style='text-align:right;position:absolute;bottom:5px;right:0px'>
+		".$chatLink."
+		</div>
 		</div> 
 		</div>";
 	}//while
 	
 	echo json_encode($return);
+}
+
+elseif($task == "loadchat"){
+	
+	
+	$sessionToken = $_POST["sessToken"];
+	$query = $mysqli->query("SELECT * FROM users WHERE code1='".$sessionToken."'");
+	$get = $query->fetch_assoc();
+	$username = $get["username"];
+	$chatWithUser = $_POST["chatWithUser"];
+	$query = $mysqli->query("SELECT * FROM chat WHERE from_user='".$username."' AND to_user='".$chatWithUser."' OR
+	to_user='".$username."' AND from_user='".$chatWithUser."' ORDER BY time ASC");
+	
+	$return["messages"] = "";
+	
+	while($get = $query->fetch_array()){
+		$fromUser = $get["from_user"];
+		if($fromUser == $username) $class = "message1";
+		else $class = "message2";
+		$return["messages"] .= "<div class='".$class."'>".$get["message"]."</div>";
+	}//while
+	
+	echo json_encode($return);
+}
+
+elseif($task == "postchat"){
+	
+	$sessionToken = $_POST["sessToken"];
+	
+	$query = $mysqli->query("SELECT * FROM users WHERE code1='".$sessionToken."'");
+	$get = $query->fetch_assoc();
+	$username = $get["username"];
+	
+	$chatWithUser = $_POST["chatWithUser"];
+	$message = $_POST["message"];
+	$time = time();
+	
+	if(!$username || !$chatWithUser) return;
+	$query = $mysqli->query("INSERT INTO chat VALUES('','".$chatWithUser."','".$username."','".$message."','".$time."')");
+	
+	$return["message"] = $message;
+	
+	echo json_encode($return);
+	
 }
 
 ?>

@@ -324,3 +324,19 @@ box-sizing:border-box;
 	background-size:100px 100px;
 	border-right:thin solid #000;
 }
+
+.message1{
+	background-color:#62baf5;
+	width:200px;
+	margin:0 0 5px 100px;
+	padding: 10px;
+	text-align:left;
+}
+
+.message2{
+	background-color:lightgray;
+	width:200px;
+	margin:0 0 5px 0;
+	padding: 10px;
+	text-align:left;
+}
