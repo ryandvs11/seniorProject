@@ -276,6 +276,7 @@
 		var url = window.location.href;
 		var chatWithUser = url.split("?");
 	    chatWithUser = chatWithUser[1];
+		document.getElementById("chat-with-span").innerHTML = chatWithUser;
 		
 		//load chat
 		$.post("scripts.php",{"sessToken":sessToken, "task":"loadchat", "chatWithUser":chatWithUser},function(data){
