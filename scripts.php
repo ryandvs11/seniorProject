@@ -4,6 +4,9 @@ $mysqli = new mysqli("localhost","root","");
 $mysqli->select_db("fitlink");
 $task = $_POST["task"];
 
+$zip1 = 0;
+$zip2 = 0;
+
 if($task == "register" || $task == "login"){
 $password = $_POST["password"];
 $username = $_POST["username"];
@@ -153,10 +156,16 @@ elseif($task == "loadusers"){
 		$fName = $get["first_name"];
 		$lName = $get["last_name"];
 		
+		
 		$query2 = $mysqli->query("SELECT * FROM users_info WHERE username='".$usernameInList."'");
 		$get2 = $query2->fetch_assoc();
 		$profile_pic = $get2["profile_pic"];
 		$userInfo = $get2["info"];
+		if($userInfo){
+			$zip = explode("zip=",$userInfo);
+			$zip = explode("&",$zip[1]);
+			$zip1 = $zip[0];
+		}//if
 		
 		//get 'about me' from user info
 		if($userInfo){
@@ -176,6 +185,21 @@ elseif($task == "loadusers"){
 		if($username != $usernameInList) $chatLink = "<a href='chat.html?".$usernameInList."'>Chat</a>";
 		else $chatLink = "";
 		
+		//get distance between user and other users
+		$query2 = $mysqli->query("SELECT * FROM users_info WHERE username='".$username."'");
+		$get2 = $query2->fetch_assoc();
+		$userInfo = $get2["info"];
+		if($userInfo){
+			$zip = explode("zip=",$userInfo);
+			$zip = explode("&",$zip[1]);
+			$zip2 = $zip[0];
+		}//if
+		
+		$url = "https://www.zipcodeapi.com/rest/BM0FVUG0xYdAHz99MFWrWzv9yvR3w0QWwds5x6dOqNE35OryNsbCvVqIHCHFPYFJ/distance.json/".$zip1."/".$zip2."/mile";
+		$contents = file_get_contents($url);
+		$distance = json_decode($contents,true);
+		$distance = round($distance["distance"]);
+		
 		$return["list"] .= "
 		<div class='user-div text-small' style='text-align:left'>
 		
@@ -185,6 +209,9 @@ elseif($task == "loadusers"){
 		".$fName." ".$lName."
 		<p>
 		".$aboutMe."
+		<div style='text-align:left;position:absolute;bottom:5px;left:0px'>
+		".$distance." miles away
+		</div>
 		<div style='text-align:right;position:absolute;bottom:5px;right:0px'>
 		".$chatLink."
 		</div>
